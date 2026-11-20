@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Classified Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>Classified Hub</h1>
+    </header>
+
+    <main>
+        <div class="checkout-container">
+            <h2>Checkout</h2>
+
+            <div id="productDetails"></div>
+
+            <h3>Delivery Details</h3>
+
+            <form id="orderForm" class="checkout-form">
+                <label for="customerName">Full Name</label>
+                <input type="text" id="customerName" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone"
+                       pattern="[0-9]{10}"
+                       maxlength="10"
+                       placeholder="Enter 10-digit number"
+                       required>
+
+                <label for="address">Delivery Address</label>
+                <textarea id="address" rows="4" required></textarea>
+
+                <button type="submit" class="primary-button">
+                    Place Order
+                </button>
+            </form>
+
+            <p><a href="index.html">← Back to Home</a></p>
+        </div>
+    </main>
+
+    <script>
+        const product = JSON.parse(
+            localStorage.getItem("selectedProduct") || "null"
+        );
+
+        const details = document.getElementById("productDetails");
+        const form = document.getElementById("orderForm");
+
+        if (!product) {
+            details.textContent =
+                "No product selected. Please return to Home and click Buy Now.";
+            form.style.display = "none";
+        } else {
+            details.innerHTML = `
+                <img src="${product.image}"
+                     alt="Product image"
+                     style="width:100%;max-width:250px;height:180px;object-fit:contain">
+
+                <h3>${product.name}</h3>
+                <p>Category: ${product.category}</p>
+                <p>${product.description}</p>
+                <h2>Price: ₹${Number(product.price).toLocaleString("en-IN")}</h2>
+            `;
+        }
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            if (!product) return;
+
+            const order = {
+                orderId: "ORD" + Date.now(),
+                productName: product.name,
+                price: Number(product.price),
+                customerName: document.getElementById("customerName").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                address: document.getElementById("address").value.trim(),
+                date: new Date().toLocaleString()
+            };
+
+            const orders = JSON.parse(
+                localStorage.getItem("orders") || "[]"
+            );
+
+            orders.push(order);
+
+            localStorage.setItem("orders", JSON.stringify(orders));
+            localStorage.setItem("latestOrder", JSON.stringify(order));
+
+            window.location.href = "order-success.html";
+        });
+    </script>
+
+</body>
+</html>

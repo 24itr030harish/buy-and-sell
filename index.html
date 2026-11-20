@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classified Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>Classified Hub</h1>
+        <nav>
+            <button onclick="showHome()">Home</button>
+            <button onclick="showSell()">Sell Product</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h2>Buy and Sell Used Products</h2>
+
+            <div class="filters">
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Search products..."
+                    oninput="displayProducts()"
+                >
+
+                <select id="category" onchange="displayProducts()">
+                    <option value="All">All Categories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Books">Books</option>
+                    <option value="Vehicles">Vehicles</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div id="productList" class="product-grid"></div>
+        </section>
+
+        <section id="sell" class="hidden">
+            <h2>Sell Your Product</h2>
+
+            <form id="sellForm">
+                <label for="productName">Product Name</label>
+                <input type="text" id="productName" required>
+
+                <label for="price">Price (₹)</label>
+                <input type="number" id="price" min="1" required>
+
+                <label for="productCategory">Category</label>
+                <select id="productCategory" required>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Books">Books</option>
+                    <option value="Vehicles">Vehicles</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="image">Product Image URL</label>
+                <input type="url" id="image" placeholder="https://..." required>
+
+                <label for="description">Description</label>
+                <textarea id="description" rows="4" required></textarea>
+
+                <button type="submit" class="primary-button">
+                    Add Product
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 Classified Hub | Buy Smart, Sell Easy</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

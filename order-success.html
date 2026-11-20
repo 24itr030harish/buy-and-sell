@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Successful - Classified Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>Classified Hub</h1>
+    </header>
+
+    <main>
+        <div class="success-page">
+            <h1>✓ Order Placed Successfully!</h1>
+            <p>Thank you for shopping with Classified Hub.</p>
+
+            <div id="orderDetails"></div>
+
+            <p><strong>Demo only:</strong> No actual payment was made.</p>
+
+            <a href="index.html" class="back-link">
+                Continue Shopping
+            </a>
+        </div>
+    </main>
+
+    <script>
+        const order = JSON.parse(
+            localStorage.getItem("latestOrder") || "null"
+        );
+
+        const details = document.getElementById("orderDetails");
+
+        if (order) {
+            details.innerHTML = `
+                <p><strong>Order ID:</strong> ${order.orderId}</p>
+                <p><strong>Product:</strong> ${order.productName}</p>
+                <p><strong>Customer:</strong> ${order.customerName}</p>
+                <p><strong>Total:</strong> ₹${Number(order.price).toLocaleString("en-IN")}</p>
+            `;
+        }
+    </script>
+
+</body>
+</html>
